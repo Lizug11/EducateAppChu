@@ -30,7 +30,7 @@ namespace EducateAppChu.Models
             }
 
             if (await userManager.FindByNameAsync(adminEmail) == null)1
-            {
+            я
                 User admin = new User
                 {
                     Email = adminEmail,
