@@ -1,4 +1,5 @@
 ﻿using EducateAppChu.Models;
+using EducateAppChu.Models.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,5 +12,7 @@ namespace EducateApp.Models
         {
             Database.EnsureCreated();
         }
+
+        public DbSet<FormOfStudy> FormsOfStudy { get; set; }
     }
 }
