@@ -29,8 +29,8 @@ namespace EducateAppChu.Models
                 await roleManager.CreateAsync(new IdentityRole("registeredUser"));
             }
 
-            if (await userManager.FindByNameAsync(adminEmail) == null)1
-            я
+            if (await userManager.FindByNameAsync(adminEmail) == null)
+            { 
                 User admin = new User
                 {
                     Email = adminEmail,
