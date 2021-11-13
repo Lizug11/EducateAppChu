@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EducateAppChu.Models.Data;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EducateAppChu.Models
@@ -21,5 +23,8 @@ namespace EducateAppChu.Models
         public string Patronymic { get; set; }
 
         //навигационные свойства
+
+        [Required]
+        public ICollection<FormOfStudy> FormsOfStudy { get; set; }
     }
 }
