@@ -11,5 +11,6 @@ namespace EducateAppChu.ViewModels.FormsOfStudy
         public string FormOfEdu { get; set; }
 
         public string IdUser { get; set; }
+        public string InterCertType { get; internal set; }
     }
 }

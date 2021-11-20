@@ -10,6 +10,7 @@ namespace EducateAppChu.Models
         {
             var emailMessage = new MimeMessage();
 
+            // нужно указать реально существующую почту mail.ru
             emailMessage.From.Add(new MailboxAddress("Администрация сайта", "lizuha-lis2-2002@mail.ru"));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
@@ -20,7 +21,8 @@ namespace EducateAppChu.Models
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.mail.ru", 465, true);
+                await client.ConnectAsync("smtp.mail.ru", 465, true); // SMTP — 465 (протокол шифрования SSL/TLS)
+                // почту дублируем из 14 строки, пароль для внешнего приложения нужно сгенерировать в почте mail.ru
                 await client.AuthenticateAsync("lizuha-lis2-2002@mail.ru", "SiMbb0pbXRyK8H6gD53N");
                 await client.SendAsync(emailMessage);
 
