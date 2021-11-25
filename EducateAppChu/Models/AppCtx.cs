@@ -3,7 +3,7 @@ using EducateAppChu.Models.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace EducateApp.Models
+namespace EducateAppChu.Models
 {
     public class AppCtx : IdentityDbContext<User>
     {
@@ -17,5 +17,7 @@ namespace EducateApp.Models
         public DbSet<Specialty> Specialties { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
         public DbSet<IntermediateCertificationType> IntermediateCertificationTypes { get; set; }
+        public DbSet<Group> Groups { get; set; }
+
     }
 }

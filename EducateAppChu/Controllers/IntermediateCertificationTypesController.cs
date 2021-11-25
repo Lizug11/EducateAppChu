@@ -1,5 +1,4 @@
-﻿using EducateApp.Models;
-
+﻿
 using EducateAppChu.Models;
 
 using EducateAppChu.Models.Data;

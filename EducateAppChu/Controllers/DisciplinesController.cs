@@ -1,5 +1,4 @@
-﻿using EducateApp.Models;
-using EducateAppChu.Models;
+﻿using EducateAppChu.Models;
 using EducateAppChu.Models.Data;
 using EducateAppChu.ViewModels.Disciplines;
 using Microsoft.AspNetCore.Authorization;

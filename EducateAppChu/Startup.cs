@@ -1,4 +1,3 @@
-using EducateApp.Models;
 using EducateAppChu.Models;
 using EducateAppChu.Models.Validators;
 using Microsoft.AspNetCore.Builder;
