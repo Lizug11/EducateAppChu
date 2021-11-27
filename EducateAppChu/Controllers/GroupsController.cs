@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EducateAppChu.Controllers
 {
-    [Authorize(Roles = "admin, registeredUser")]
+    [Authorize(Roles = "admin, registeredUser")]1
     public class GroupsController : Controller
     {
         private readonly AppCtx _context;
