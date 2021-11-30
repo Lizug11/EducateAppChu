@@ -54,7 +54,7 @@ namespace EducateAppChu.Controllers
                 .Include(f => f.User)                // и связываем с таблицей пользователи через класс User
                 .Where(f => f.IdUser == user.Id);     // устанавливается условие с выбором записей форм обучения текущего пользователя по его Id
 
-            ViewData["IntermediateCertificationTypeSort"] = sortOrder == IntermediateCertificationTypeSortState.InterCertTypeAsc ? IntermediateCertificationTypeSortState.InterCertTypeDesc : IntermediateCertificationTypeSortState.InterCertTypeAsc;
+            ViewData["InterCertTypeSort"] = sortOrder == IntermediateCertificationTypeSortState.InterCertTypeAsc ? IntermediateCertificationTypeSortState.InterCertTypeDesc : IntermediateCertificationTypeSortState.InterCertTypeAsc;
 
             intermediateCertificationTypes = sortOrder switch
             {
