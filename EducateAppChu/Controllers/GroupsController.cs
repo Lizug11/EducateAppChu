@@ -312,12 +312,13 @@ namespace EducateAppChu.Controllers
             var group = await _context.Groups
                 .Include(s => s.Specialty).ThenInclude(t => t.FormOfStudy)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (group == null)
             {
                 return NotFound();
             }
 
-            return View(group);
+            return PartialView(group);
         }
 
         private bool GroupExists(short id)

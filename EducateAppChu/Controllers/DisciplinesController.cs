@@ -1,14 +1,17 @@
-﻿using EducateAppChu.Models;
+﻿using ClosedXML.Excel;
+using EducateAppChu.Models;
 using EducateAppChu.Models.Data;
 using EducateAppChu.ViewModels.Disciplines;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Texnicum.Controllers
+namespace EducateAppChu.Controllers
 {
     [Authorize(Roles = "admin, registeredUser")]
     public class DisciplinesController : Controller
@@ -188,7 +191,7 @@ namespace Texnicum.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Disciplines/Details/5
+        // GET: Groups/Details/5
         public async Task<IActionResult> Details(short? id)
         {
             if (id == null)
@@ -204,12 +207,110 @@ namespace Texnicum.Controllers
                 return NotFound();
             }
 
-            return View(disciplines);
+            return PartialView(disciplines);
         }
+
+        //// GET: Disciplines/Details/5
+        //public async Task<IActionResult> Details(short? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var disciplines = await _context.Disciplines
+        //        .Include(d => d.User)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (disciplines == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(disciplines);
+        //}
 
         private bool DisciplinesExists(short id)
         {
             return _context.Disciplines.Any(e => e.Id == id);
+        }
+
+        public async Task<FileResult> DownloadPattern()
+        {
+            IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            // выбираем из базы данных все специальности текущего пользователя
+            var appCtx = _context.Specialties
+                .Include(s => s.FormOfStudy)    // устанавливая связь с формами обучения
+                .Include(f => f.Groups)         // и с группами
+                .Where(w => w.FormOfStudy.IdUser == user.Id)
+                .OrderBy(f => f.FormOfStudy.FormOfEdu)    // сортируем записи по названию формы обучения
+                .ThenBy(f => f.Code);                     // а затем по коду обучения
+
+            int i = 1;      // счетчик
+
+            IXLRange rngBorder;     // объект для работы с диапазонами в Excel (выделение групп ячеек)
+
+            // создание книги Excel
+            using (XLWorkbook workbook = new(XLEventTracking.Disabled))
+            {
+                // для каждой специальности 
+                foreach (Specialty specialty in appCtx)
+                {
+                    // добавить лист в книгу Excel
+                    // с названием 3 символа формы обучения и кода специальности
+                    IXLWorksheet worksheet = workbook.Worksheets
+                        .Add($"{specialty.FormOfStudy.FormOfEdu.Substring(0, 3)} {specialty.Code}");
+
+                    // в первой строке текущего листа указываем: 
+                    // в ячейку A1 значение "Форма обучения"
+                    worksheet.Cell("A" + i).Value = "Форма обучения";
+                    // в ячейку B1 значение - название формы обучения текущей специальности
+                    worksheet.Cell("B" + i).Value = specialty.FormOfStudy.FormOfEdu;
+                    // увеличение счетчика на единицу
+                    i++;
+
+                    // во второй строке
+                    worksheet.Cell("A" + i).Value = "Код специальности";
+                    worksheet.Cell("B" + i).Value = $"'{specialty.Code}";
+
+                    worksheet.Cell("C" + i).Value = "Название";
+                    worksheet.Cell("D" + i).Value = specialty.Name;
+
+                    // делаем отступ на одну строку и пишем в четвертой строке
+                    i += 2;
+                    // заголовки у столбцов
+                    worksheet.Cell("A" + i).Value = "Индекс профессионального модуля";
+                    worksheet.Cell("B" + i).Value = "Название профессионального модуля";
+                    worksheet.Cell("C" + i).Value = "Индекс";
+                    worksheet.Cell("D" + i).Value = "Название";
+                    worksheet.Cell("E" + i).Value = "Краткое название";
+
+                    // устанавливаем внешние границы для диапазона A4:F4
+                    rngBorder = worksheet.Range("A4:E4");       // создание диапазона (выделения ячеек)
+                    rngBorder.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;       // для диапазона задаем внешнюю границу
+
+                    // на листе для столбцов задаем значение ширины по содержимому
+                    worksheet.Columns().AdjustToContents();
+
+                    // счетчик "обнуляем"
+                    i = 1;
+                }
+
+                // создаем стрим
+                using (MemoryStream stream = new())
+                {
+                    // помещаем в стрим созданную книгу
+                    workbook.SaveAs(stream);
+                    stream.Flush();
+
+                    // возвращаем файл определенного типа
+                    return new FileContentResult(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    {
+                        FileDownloadName = $"disciplines_{DateTime.UtcNow.ToShortDateString()}.xlsx"     //в названии файла указываем таблицу и текущую дату
+                    };
+                }
+            }
         }
     }
 }

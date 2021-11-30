@@ -297,12 +297,9 @@ namespace EducateAppChu.Controllers
 
         }
 
-        // GET: FormsOfStudy/Details/5
-
+        // GET: Groups/Details/5
         public async Task<IActionResult> Details(short? id)
-
         {
-
             if (id == null)
 
             {
@@ -325,9 +322,40 @@ namespace EducateAppChu.Controllers
 
             }
 
-            return View(intermediateCertificationType);
-
+            return PartialView(intermediateCertificationType);
         }
+
+        //// GET: FormsOfStudy/Details/5
+
+        //public async Task<IActionResult> Details(short? id)
+
+        //{
+
+        //    if (id == null)
+
+        //    {
+
+        //        return NotFound();
+
+        //    }
+
+        //    var intermediateCertificationType = await _context.IntermediateCertificationTypes
+
+        //    .Include(f => f.User)
+
+        //    .FirstOrDefaultAsync(m => m.Id == id);
+
+        //    if (intermediateCertificationType == null)
+
+        //    {
+
+        //        return NotFound();
+
+        //    }
+
+        //    return View(intermediateCertificationType);
+
+        //}
 
         private bool IntermediateCertificationTypeExists(short id)
 
