@@ -44,30 +44,53 @@ namespace EducateAppChu.Controllers
         }
 
         // GET: FormsOfStudy
-
-        public async Task<IActionResult> Index()
-
+        public async Task<IActionResult> Index(IntermediateCertificationTypeSortState sortOrder = IntermediateCertificationTypeSortState.InterCertTypeAsc)
         {
-
             // находим информацию о пользователе, который вошел в систему по его имени
-
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             // через контекст данных получаем доступ к таблице базы данных FormsOfStudy
+            var intermediateCertificationTypes = _context.IntermediateCertificationTypes
+                .Include(f => f.User)                // и связываем с таблицей пользователи через класс User
+                .Where(f => f.IdUser == user.Id);     // устанавливается условие с выбором записей форм обучения текущего пользователя по его Id
 
-            var appCtx = _context.IntermediateCertificationTypes
+            ViewData["IntermediateCertificationTypeSort"] = sortOrder == IntermediateCertificationTypeSortState.InterCertTypeAsc ? IntermediateCertificationTypeSortState.InterCertTypeDesc : IntermediateCertificationTypeSortState.InterCertTypeAsc;
 
-            .Include(f => f.User) // и связываем с таблицей пользователи через класс User
-
-            .Where(f => f.IdUser == user.Id) // устанавливается условие с выбором записей форм обучения текущего пользователя по его Id
-
-            .OrderBy(f => f.InterCertType); // сортируем все записи по имени форм обучения
+            intermediateCertificationTypes = sortOrder switch
+            {
+                IntermediateCertificationTypeSortState.InterCertTypeDesc => intermediateCertificationTypes.OrderByDescending(s => s.InterCertType),
+                _ => intermediateCertificationTypes.OrderBy(s => s.InterCertType),
+            };
 
             // возвращаем в представление полученный список записей
-
-            return View(await appCtx.ToListAsync());
-
+            return View(await intermediateCertificationTypes.AsNoTracking().ToListAsync());
         }
+
+        //// GET: FormsOfStudy
+
+        //public async Task<IActionResult> Index()
+
+        //{
+
+        //    // находим информацию о пользователе, который вошел в систему по его имени
+
+        //    IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+        //    // через контекст данных получаем доступ к таблице базы данных FormsOfStudy
+
+        //    var appCtx = _context.IntermediateCertificationTypes
+
+        //    .Include(f => f.User) // и связываем с таблицей пользователи через класс User
+
+        //    .Where(f => f.IdUser == user.Id) // устанавливается условие с выбором записей форм обучения текущего пользователя по его Id
+
+        //    .OrderBy(f => f.InterCertType); // сортируем все записи по имени форм обучения
+
+        //    // возвращаем в представление полученный список записей
+
+        //    return View(await appCtx.ToListAsync());
+
+        //}
 
         // GET: FormsOfStudy/Create
 

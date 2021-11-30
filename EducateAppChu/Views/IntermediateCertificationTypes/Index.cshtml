@@ -26,7 +26,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.InterCertType)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.InterCertTypeSort">
+                    @Html.DisplayNameFor(model => model.InterCertType)
+                </a>
             </th>
             <th></th>
         </tr>
