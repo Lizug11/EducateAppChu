@@ -1,5 +1,6 @@
 ﻿using EducateAppChu.Models;
 using EducateAppChu.Models.Data;
+using EducateAppChu.ViewModels;
 using EducateAppChu.ViewModels.Specialties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -181,17 +182,6 @@ namespace EducateApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(short id, EditSpecialtyViewModel model)
         {
-            IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-
-            if (_context.Specialties
-                .Where(f => f.FormOfStudy.IdUser == user.Id &&
-                    f.Code == model.Code &&
-                    f.Name == model.Name &&
-                    f.IdFormOfStudy == model.IdFormOfStudy)
-                .FirstOrDefault() != null)
-            {
-                ModelState.AddModelError("", "Введеная специальность уже существует");
-            }
             Specialty specialty = await _context.Specialties.FindAsync(id);
 
             if (id != specialty.Id)
@@ -222,6 +212,7 @@ namespace EducateApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             ViewData["IdFormOfStudy"] = new SelectList(
                 _context.FormsOfStudy.Where(w => w.IdUser == user.Id),

@@ -139,6 +139,60 @@
     </table>
 </div>
 
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (Model.PageViewModel.HasPreviousPage || Model.PageViewModel.HasNextPage)
+        {
+            @if (Model.PageViewModel.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" title="Назад"
+                       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                       asp-route-sortOrder="@(Model.SortDisciplineViewModel.Current)"
+                       asp-route-indexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
+                       asp-route-profModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
+                       asp-route-index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
+                       asp-route-name="@(Model.FilterDisciplineViewModel.SelectedName)"
+                       asp-route-shortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            }
+            @if (Model.PageViewModel.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" title="Вперед"
+                       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                       asp-route-sortOrder="@(Model.SortDisciplineViewModel.Current)"
+                       asp-route-indexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
+                       asp-route-profModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
+                       asp-route-index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
+                       asp-route-name="@(Model.FilterDisciplineViewModel.SelectedName)"
+                       asp-route-shortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</nav>
+
 @*<table class="table">
     <thead>
         <tr>
