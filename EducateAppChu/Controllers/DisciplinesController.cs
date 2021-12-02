@@ -36,7 +36,7 @@ namespace EducateAppChu.Controllers
         {
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            int pageSize = 15;
+            int pageSize = 3;
 
             //фильтрация
             IQueryable<Discipline> disciplines = _context.Disciplines;
