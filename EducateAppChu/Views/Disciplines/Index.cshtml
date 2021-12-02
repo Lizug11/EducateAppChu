@@ -149,11 +149,12 @@
                     <a class="page-link" asp-action="Index" title="Назад"
                        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
                        asp-route-sortOrder="@(Model.SortDisciplineViewModel.Current)"
-                       asp-route-indexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
-                       asp-route-profModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
-                       asp-route-index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
-                       asp-route-name="@(Model.FilterDisciplineViewModel.SelectedName)"
-                       asp-route-shortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
+                       asp-route-IndexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
+                       asp-route-ProfModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
+                       asp-route-Index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
+                       asp-route-Name="@(Model.FilterDisciplineViewModel.SelectedName)"
+                       asp-route-ShortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
+
                         <i class="fas fa-chevron-left"></i>
                     </a>
                 </li>
@@ -172,11 +173,11 @@
                     <a class="page-link" asp-action="Index" title="Вперед"
                        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
                        asp-route-sortOrder="@(Model.SortDisciplineViewModel.Current)"
-                       asp-route-indexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
-                       asp-route-profModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
-                       asp-route-index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
-                       asp-route-name="@(Model.FilterDisciplineViewModel.SelectedName)"
-                       asp-route-shortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
+                       asp-route-IndexProfModule="@(Model.FilterDisciplineViewModel.SelectedIndexProfModule)"
+                       asp-route-ProfModule="@(Model.FilterDisciplineViewModel.SelectedProfModule)"
+                       asp-route-Index="@(Model.FilterDisciplineViewModel.SelectedIndex)"
+                       asp-route-Name="@(Model.FilterDisciplineViewModel.SelectedName)"
+                       asp-route-ShortName="@(Model.FilterDisciplineViewModel.SelectedShortName)">
                         <i class="fas fa-chevron-right"></i>
                     </a>
                 </li>
@@ -189,6 +190,7 @@
                     </a>
                 </li>
             }
+
         }
     </ul>
 </nav>

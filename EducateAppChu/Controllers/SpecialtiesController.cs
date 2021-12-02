@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EducateApp.Controllers
+namespace EducateAppChu.Controllers
 {
     [Authorize(Roles = "admin, registeredUser")]
     public class SpecialtiesController : Controller

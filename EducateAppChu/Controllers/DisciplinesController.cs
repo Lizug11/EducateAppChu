@@ -40,8 +40,8 @@ namespace EducateAppChu.Controllers
 
             //фильтрация
             IQueryable<Discipline> disciplines = _context.Disciplines;
-                //.Include(s => s.FormOfStudy)                    // связываем специальности с формами обучения
-                //.Where(w => w.FormOfStudy.IdUser == user.Id);    // в формах обучения есть поле с внешним ключом пользователя
+            //.Include(s => s.FormOfStudy)                    // связываем специальности с формами обучения
+            //.Where(w => w.FormOfStudy.IdUser == user.Id);    // в формах обучения есть поле с внешним ключом пользователя
 
 
             if (!String.IsNullOrEmpty(indexProfModule))

@@ -102,7 +102,7 @@ namespace EducateAppChu.Controllers
                 ModelState.AddModelError("", "Введеная группа уже существует");
             }
 
-            if (model.YearOfIssue < model.YearOfAdmission)
+            if (model.YearOfIssue <= model.YearOfAdmission)
             {
                 ModelState.AddModelError("", "Год выпуска должен быть больше, чем год поступления");
             }
