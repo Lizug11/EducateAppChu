@@ -148,8 +148,12 @@ namespace EducateAppChu.Controllers
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             if (_context.Disciplines
-                .Where(f => f.IdUser == user.Id &&
-                    f.Name == model.Name).FirstOrDefault() != null)
+                .Where(f => f.IdUser == user.Id
+                    && f.Name == model.Name
+                    && f.IndexProfModule == model.IndexProfModule
+                    && f.ProfModule == model.ProfModule
+                    && f.Index == model.Index
+                    && f.ShortName == model.ShortName).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("", "Введенный вид дисциплины уже существует");
             }
@@ -219,8 +223,12 @@ namespace EducateAppChu.Controllers
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             if (_context.Disciplines
-                .Where(f => f.IdUser == user.Id &&
-                    f.Name == model.Name).FirstOrDefault() != null)
+                .Where(f => f.IdUser == user.Id
+                    && f.Name == model.Name
+                    && f.IndexProfModule == model.IndexProfModule
+                    && f.ProfModule == model.ProfModule
+                    && f.Index == model.Index
+                    && f.ShortName == model.ShortName).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("", "Введенная дисциплина уже существует");
             }
